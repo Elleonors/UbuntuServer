@@ -97,3 +97,7 @@ Let's dive into the setup process and demonstrate the power of Linux network ser
 - Restart Apache.
 - Access `localhost/glpi` in a browser and follow the instructions.
   ![Image 8](assets/8.png)
+
+  # Conclusion
+
+  In this guide, we've successfully set up a Linux server environment to demonstrate essential network services like DHCP, DNS, and HTTP. Through careful configuration and troubleshooting, we've ensured that each component functions smoothly, laying the groundwork for a reliable infrastructure. With our documentation and live demo, we're ready to showcase our Linux server solution to the local library and address any questions or concerns they may have. This marks the completion of our project, showcasing the power and flexibility of Linux in meeting the library's needs.

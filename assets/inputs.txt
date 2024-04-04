@@ -1,0 +1,64 @@
+1/ installer ubuntu server
+2/ setup le passwd root
+3/ setup un utilisateur
+4/ installer isc-dhcp-server
+5/ configurer le /etc/dhcp/dhcpd.conf ( trouvé dans dhcpd.conf.dpkg-dist )
+		=> IMG 1
+	=> donner son subnet et son subnet mask, spécifier une range ( laisser de
+		la place au début pour les autres outils sur le network.)
+		donner aussi le gateway et le broadcast
+6/ install net-tools, to use netstat and check the firewall
+		=> IMG 2
+	=> on peut voir le dhcp écouter en UDP sur le port 67
+7/ autoriser le firewall à laisser passer du udp en port 67, tant qu'on y est, 
+	ajouter tous les ports qu'on veut utiliser. j'ai choisi 22(SSH)80(HTTP)443(HTTPS)et 53(dns)
+		=> IMG 3
+		=> IMG 4
+8/ demander une IP statique. en Ubuntu server 22.04, c'est netplan qui s'occupe de ça par défaut.
+	=> Aller dans /etc/netplan/-fichier de configuration.yaml-
+		=> IMG 5
+	=> si aucun fichier : '''sudo netplan generate'''
+	=> Changer la configuration pour ajouter la demande d'un ip statique
+	=> doc : https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-18-04-bionic-beaver-linux
+		=> IMG 6
+	=> '''sudo netplan apply'''
+9/ install DNS
+	=> tools : neo@noah:~$  sudo apt install bind9 bind9utils bind9-doc -y
+	=> '''sudo nano /etc/bind/named.conf.options'''
+		=> named.conf.options.txt
+	=> '''sudo nano /etc/bind/db.example.com'''
+		=> db.example.com.txt
+	=> '''sudo nano /etc/bind/db.192'''
+		=> db.192.txt
+	=> '''sudo nano /etc/bind/named.conf.local'''
+		=> named.conf.local.txt
+	=> '''sudo systemctl restart bind9'''
+	=> '''sudo ufw enable'''
+	=> '''sudo ufw allow bind9'''
+	=> '''sudo ufw reload'''
+
+10/ apache
+	=> '''sudo apt update && sudo apt upgrade'''
+	   '''sudo apt install apache2'''
+	=> check ip address in browser
+	=> Change /var/www/html/ content to show your website
+11/ MariaDB & GLPI
+	=> '''wget https://github.com/glpi-project/glpi/releases/download/10.0.0-rc1/glpi-10.0.0-rc1.tgz -O glpi.tar.gz'''
+	=> '''sudo tar -zxvf glpi.tar.gz -C /var/www/html/'''
+	=> '''sudo chown -R www-data:www-data /var/www/html/glpi'''
+	=> '''sudo chmod -R 755 /var/www/html/glpi'''
+	=> '''Mysql'''
+	=> '''Show databases;'''
+	=> '''create database glpi_db;'''
+	=> '''grant all privileges on neo.*to'glpi'@'localhost' identified by 'best_password_ever'''' (it's not it btw)
+	=> '''flush privileges;'''
+	=> restart apache
+	=> go to localhost/glpi in a browser and follow instruction
+	=> IMG 8
+
+
+
+
+
+
+
